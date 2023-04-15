@@ -7,8 +7,18 @@ Example: 100||200-300
 100||200||300
 
 100-200-300
+
+||
+--
+
+---
+|--
+||-
+|||
+
 '''
 
+import sys
 
 E_1 = [1, 1.2, 2.2, 3.3, 3.9, 4.7, 5.6, 6.8, 8.2]
 E_2 = [10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82]
@@ -20,6 +30,7 @@ K_2 = [10, 12, 15, 18, 22, 27, 33, 39, 47, 56, 68, 82]
 K_3 = [100, 120, 150, 180, 220, 270, 330, 390, 470, 560, 820]
 resistor_values_K = [x * 1000 for x in (K_1 + K_2 + K_3)]
 
+infinite_resistors = resistor_values_E + resistor_values_K
 finite_resistor_values = [1, 2200]
 
 
@@ -37,6 +48,7 @@ def process() -> object:
 
     if response == '1':
         print('Selected E and K resistors')
+        infinite_calculations()
 
     elif response == '2':
         print('Selected finite resistors')
@@ -49,8 +61,29 @@ def finite_calculations():
     pass
 
 
-def non_finite_calculations():
-    pass
+def infinite_calculations():
+    combinations = []
+    combinations_value = []
+
+    # --------------------------------------------------------
+    # 2 Resistors
+    # --------------------------------------------------------
+
+    # parallel combination with 2 resistors
+    parallel_2_combination_list = []
+    for i, resistor_1 in enumerate(infinite_resistors):
+        for j, resistor_2 in enumerate(infinite_resistors[i:], start=i):
+            parallel_value = (resistor_1 * resistor_2)/(resistor_1 + resistor_2)
+
+            parallel_2_combination_list.append([round(parallel_value, 2), f'{resistor_1}||{resistor_2}'])
+
+    # series combination with 2 resistors
+    series_2_combination_list = []
+    for i, resistor_1 in enumerate(infinite_resistors):
+        for j, resistor_2 in enumerate(infinite_resistors[i:], start=i):
+            series_value = resistor_1 + resistor_2
+
+            series_2_combination_list.append([round(series_value, 2), f'{resistor_1}-{resistor_2}'])
 
 
 if __name__ == '__main__':
