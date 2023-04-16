@@ -99,9 +99,6 @@ def infinite_calculations():
             p2_s1_combination_list.append([round(parallel_value, 2), f'({resistor_1[1]})-{resistor_2}'])
     p2_s1_combination_list.sort()
 
-    for i, item in enumerate(p2_s1_combination_list):
-        print(f'{i}: {item}')
-
 
 if __name__ == '__main__':
     process()
