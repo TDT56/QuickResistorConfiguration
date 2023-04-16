@@ -8,13 +8,12 @@ Example: 100||200-300
 
 100-200-300
 
-||
---
+1||2
+1-2
 
----
-|--
-||-
-|||
+1-2-3
+1||(2-3)
+(1||2)-3
 
 '''
 
@@ -69,21 +68,39 @@ def infinite_calculations():
     # 2 Resistors
     # --------------------------------------------------------
 
-    # parallel combination with 2 resistors
+    # parallel combination with 2 resistors → 1||2
     parallel_2_combination_list = []
     for i, resistor_1 in enumerate(infinite_resistors):
         for j, resistor_2 in enumerate(infinite_resistors[i:], start=i):
             parallel_value = (resistor_1 * resistor_2)/(resistor_1 + resistor_2)
 
             parallel_2_combination_list.append([round(parallel_value, 2), f'{resistor_1}||{resistor_2}'])
+    parallel_2_combination_list.sort()
 
-    # series combination with 2 resistors
+    # series combination with 2 resistors → 1-2
     series_2_combination_list = []
     for i, resistor_1 in enumerate(infinite_resistors):
         for j, resistor_2 in enumerate(infinite_resistors[i:], start=i):
             series_value = resistor_1 + resistor_2
 
             series_2_combination_list.append([round(series_value, 2), f'{resistor_1}-{resistor_2}'])
+    series_2_combination_list.sort()
+
+    # --------------------------------------------------------
+    # 3 Resistors
+    # --------------------------------------------------------
+
+    # two parallel resistors with a series resistor (1||2)-3
+    p2_s1_combination_list = []
+    for i, resistor_1 in enumerate(parallel_2_combination_list):
+        for j, resistor_2 in enumerate(infinite_resistors[i:], start=i):
+            parallel_value = resistor_1[0] + resistor_2
+
+            p2_s1_combination_list.append([round(parallel_value, 2), f'({resistor_1[1]})-{resistor_2}'])
+    p2_s1_combination_list.sort()
+
+    for i, item in enumerate(p2_s1_combination_list):
+        print(f'{i}: {item}')
 
 
 if __name__ == '__main__':
